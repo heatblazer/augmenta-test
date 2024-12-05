@@ -1,0 +1,123 @@
+# Order Cache Testing - Instructions
+
+- Your code must pass all unit tests.
+- Functionality and performance are tested.
+- Performance is measured Normalized Compute Units (NCUs).
+- Your solution must be able to process up to 1,000,000 orders in 1,500 NCUs or less.
+
+## Prerequisites
+
+To compile and run the tests, you will need:
+
+1. A C++ compiler with support for C++17 or later.
+2. Google Test library.
+
+(Windows + Visual Studio)
+Use Google Test for C++ in Visual Studio
+https://learn.microsoft.com/en-us/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2022
+
+(Ubuntu/Debian/Linux)
+```
+sudo apt-get install libgtest-dev
+cd /usr/src/gtest
+sudo cmake CMakeLists.txt
+sudo make
+sudo cp *.a /usr/lib
+```
+
+(macOS)
+```
+brew install googletest
+```
+
+## Compilation
+
+To compile this application, follow these steps:
+
+1. Open a terminal/command prompt and navigate to the OrderCache directory.
+2. Run the following command:
+
+(Ubuntu/Debian/Linux)
+```
+g++ --std=c++17 OrderCacheTest.cpp OrderCache.cpp -o OrderCacheTest -lgtest -lgtest_main -pthread
+```
+
+(macOS)
+```
+g++ --std=c++17 OrderCacheTest.cpp OrderCache.cpp -o OrderCacheTest -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -pthread
+```
+
+## Running the test
+
+To run the test, use the following command:
+
+```
+./OrderCacheTest
+```
+
+Exepected output
+----------------
+
+[==========] Running 23 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 23 tests from OrderCacheTest
+[     INFO ] 1 NCU = 4ms
+[ RUN      ] OrderCacheTest.U1_UnitTest_addOrder
+[       OK ] OrderCacheTest.U1_UnitTest_addOrder (0 ms)
+[ RUN      ] OrderCacheTest.U2_UnitTest_getAllOrders
+[       OK ] OrderCacheTest.U2_UnitTest_getAllOrders (0 ms)
+[ RUN      ] OrderCacheTest.U3_UnitTest_cancelOrder
+[       OK ] OrderCacheTest.U3_UnitTest_cancelOrder (0 ms)
+[ RUN      ] OrderCacheTest.U4_UnitTest_cancelOrdersForUser
+[       OK ] OrderCacheTest.U4_UnitTest_cancelOrdersForUser (0 ms)
+[ RUN      ] OrderCacheTest.U5_UnitTest_cancelOrdersForSecIdWithMinimumQty
+[       OK ] OrderCacheTest.U5_UnitTest_cancelOrdersForSecIdWithMinimumQty (0 ms)
+[ RUN      ] OrderCacheTest.U6_UnitTest_getMatchingSizeForSecurityTest_Example1
+[       OK ] OrderCacheTest.U6_UnitTest_getMatchingSizeForSecurityTest_Example1 (0 ms)
+[ RUN      ] OrderCacheTest.U7_UnitTest_getMatchingSizeForSecurityTest_Example2
+[       OK ] OrderCacheTest.U7_UnitTest_getMatchingSizeForSecurityTest_Example2 (0 ms)
+[ RUN      ] OrderCacheTest.U8_UnitTest_getMatchingSizeForSecurityTest_Example3
+[       OK ] OrderCacheTest.U8_UnitTest_getMatchingSizeForSecurityTest_Example3 (0 ms)
+[ RUN      ] OrderCacheTest.O1_OrderMatchingTest_TestDifferentQuantities
+[       OK ] OrderCacheTest.O1_OrderMatchingTest_TestDifferentQuantities (0 ms)
+[ RUN      ] OrderCacheTest.O2_OrderMatchingTest_TestComplexCombinations
+[       OK ] OrderCacheTest.O2_OrderMatchingTest_TestComplexCombinations (0 ms)
+[ RUN      ] OrderCacheTest.O3_OrderMatchingTest_TestSameCompanyNoMatch
+[       OK ] OrderCacheTest.O3_OrderMatchingTest_TestSameCompanyNoMatch (0 ms)
+[ RUN      ] OrderCacheTest.C1_CancellationTest_CancelNonExistentOrder
+[       OK ] OrderCacheTest.C1_CancellationTest_CancelNonExistentOrder (0 ms)
+[ RUN      ] OrderCacheTest.C2_CancellationTest_CancelOrdersPartialOnMinQty
+[       OK ] OrderCacheTest.C2_CancellationTest_CancelOrdersPartialOnMinQty (0 ms)
+[ RUN      ] OrderCacheTest.C3_CancellationTest_CancelMultipleOrdersForUser
+[       OK ] OrderCacheTest.C3_CancellationTest_CancelMultipleOrdersForUser (0 ms)
+[ RUN      ] OrderCacheTest.M1_MatchingSizeTest_MultipleSmallOrdersMatchingLargeOrder
+[       OK ] OrderCacheTest.M1_MatchingSizeTest_MultipleSmallOrdersMatchingLargeOrder (0 ms)
+[ RUN      ] OrderCacheTest.M2_MatchingSizeTest_MultipleMatchingCombinations
+[       OK ] OrderCacheTest.M2_MatchingSizeTest_MultipleMatchingCombinations (0 ms)
+[ RUN      ] OrderCacheTest.P1_PerfTest_1000_Orders
+[     INFO ] Matched 1000 orders in 2 NCUs (8ms)
+[       OK ] OrderCacheTest.P1_PerfTest_1000_Orders (11 ms)
+[ RUN      ] OrderCacheTest.P2_PerfTest_5000_Orders
+[     INFO ] Matched 5000 orders in 8.75 NCUs (35ms)
+[       OK ] OrderCacheTest.P2_PerfTest_5000_Orders (48 ms)
+[ RUN      ] OrderCacheTest.P3_PerfTest_10000_Orders
+[     INFO ] Matched 10000 orders in 22.75 NCUs (91ms)
+[       OK ] OrderCacheTest.P3_PerfTest_10000_Orders (125 ms)
+[ RUN      ] OrderCacheTest.P4_PerfTest_50000_Orders
+[     INFO ] Matched 50000 orders in 47.25 NCUs (189ms)
+[       OK ] OrderCacheTest.P4_PerfTest_50000_Orders (273 ms)
+[ RUN      ] OrderCacheTest.P5_PerfTest_100000_Orders
+[     INFO ] Matched 100000 orders in 95.75 NCUs (383ms)
+[       OK ] OrderCacheTest.P5_PerfTest_100000_Orders (551 ms)
+[ RUN      ] OrderCacheTest.P6_PerfTest_500000_Orders
+[     INFO ] Matched 500000 orders in 554 NCUs (2216ms)
+[       OK ] OrderCacheTest.P6_PerfTest_500000_Orders (3056 ms)
+[ RUN      ] OrderCacheTest.P7_PerfTest_1000000_Orders
+[     INFO ] Matched 1000000 orders in 1129.75 NCUs (4519ms)
+[       OK ] OrderCacheTest.P7_PerfTest_1000000_Orders (6320 ms)
+[----------] 23 tests from OrderCacheTest (10395 ms total)
+
+[----------] Global test environment tear-down
+[==========] 23 tests from 1 test suite ran. (10400 ms total)
+[  PASSED  ] 23 tests.
+
