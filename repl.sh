@@ -3,7 +3,7 @@
 #latest average speed in out.txt
 #after hash optimization speed fell from 12~13 to 4~5
 
-g++ --std=c++17 OrderCacheTest.cpp OrderCache.cpp -o OrderCacheTest -lgtest -lgtest_main -pthread -lOpenCL
+g++ --std=c++17 OrderCacheTest.cpp OrderCache.cpp -o OrderCacheTest -lgtest -lgtest_main -pthread 
 
 for i in {1..100}
 do
